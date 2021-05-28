@@ -1,25 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import React, {useEffect, useState} from 'react';
+import Home from './components/Home';
+import Posts from './components/Post';
+import PostLoadingComponent from './components/PostLoading';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+function App(props) {
+ 
+  const PostLoading =  PostLoadingComponent  ( Posts );
+  const[postState, setPostState] = useState([])
+
+  //which will allow you to perform side effect operations such as fetching data, clean up, or DOM manipulation
+  useEffect(() => {
+   
+    const fetchData = async () => {
+      let result = await fetch(
+        "http://127.0.0.1:8000/products/"
+      );
+
+      const data = await result.json();
+      setPostState(data.products);
+     
+    };
+    fetchData();
+  }, [] 
+  
   );
-}
 
+  console.log(postState)
+    return (
+    
+        <div className="App">
+           <PostLoading isLoading={postState.loading} post={postState.post}/> 
+           <ul>
+            {postState.map( (item) =>
+            ( <p>{item.product_price}</p> )
+               )}
+            <h1>hey</h1>
+        </ul>
+        </div>
+   
+
+    )
+  
+  }
+ 
 export default App;
