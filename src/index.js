@@ -6,6 +6,7 @@ import App from './App';
 import Header from './components/Header'; 
 import Footer from './components/Footer'; 
 import reportWebVitals from './reportWebVitals';
+import './components/fontawesome';
 
 
 const routing = (
@@ -16,7 +17,7 @@ const routing = (
       <Switch>
           <Route exact path ="/" component={App} />
       </Switch>
-      <Footer />
+      {/* <Footer /> */}
     </React.StrictMode>,
   </Router>
 );
